@@ -1,0 +1,319 @@
+def crear_paciente(id:int, genero:str, edad:int, PPM:int,
+                   Hb:int, CGB:float, glicemia:int, LDL:float, HDL:float, trigliceridos:float, CT:float,
+                   CL:float, CP:float, tiempo:int, GCH:int, unidades_suministradas:int) -> dict:
+    
+    diccionario={}
+    diccionario["id"]= id
+    diccionario["genero"]= genero
+    diccionario["edad"]= edad
+    diccionario["PPM"]= PPM
+    diccionario["Hb"]= Hb
+    diccionario["CGB"]= CGB
+    diccionario["glicemia"]= glicemia
+    diccionario["LDL"]= LDL
+    diccionario["HDL"]= HDL
+    diccionario["trigliceridos"]= trigliceridos
+    diccionario["CT"]= CT
+    diccionario["CL"]= CL
+    diccionario["CP"]= CP
+    diccionario["tiempo"]= tiempo
+    diccionario["GCH"]= GCH
+    diccionario["unidades_suministradas"] = unidades_suministradas
+
+    return diccionario
+
+def buscar_examen(id:int, e1:dict,e2:dict, e3:dict, e4:dict)->dict:
+    diccionario_paciente= None
+    
+    if e1[id] == id:
+       diccionario_paciente= e1
+    elif e2[id] == id:
+       diccionario_paciente= e2
+    elif e3[id] == id:
+        diccionario_paciente= e3
+    elif e4[id] == id:
+        diccionario_paciente = e4
+    
+    return diccionario_paciente
+        
+    """
+    Busca en cuál de los 4 diccionarios que se pasan por parámetro está el examen de sangre
+    cuyo id es dado por parámetros.
+    Si no se encuentra el examen, se retorna None.
+    :param id: El id del examen de sangre que se desea buscar
+    :param e1: Diccionario con la información del examen de sangre 1
+    :param e2: Diccionario con la información del examen de sangre 2
+    :param e3: Diccionario con la información del examen de sangre 3
+    :param e4: Diccionario con la información del examen de sangre 4
+    :return:
+        dict: Diccionario del examen de sangre cuyo id fue dado por parámetro. Retorna None si no lo encuentra
+    """
+    
+
+def confirmar_embarazo(examen:dict)->bool:
+    resultado = "No hay embarazo"
+    
+    if examen["genero"] == "F":
+       if examen["GCH"] < 9:
+           resultado = False
+       elif examen["GCH"] >= 9:
+           resultado = True
+    else:
+        resultado = None
+    return resultado 
+        
+    """
+    Valida si hay embarazo dependiendo de los niveles de la GCH en el examen de sangre con
+    id dado por parámetro
+    :param examen: Diccionario con el examen de sangre a analizar
+    :return:
+        bool: True si el examen de sangre confirma el embarazo, False de lo contrario
+    """
+
+
+def validar_pulsaciones(examen:dict)->str:
+    resultado_pulsaciones= "normalidad"
+#hombres    
+    if examen["genero"]== "M":
+#
+        if examen["edad"] < 20:
+            resultado_pulsaciones= "normalidad"
+#20-29
+        if examen["edad"] >= 20 and  examen["edad"] <= 29 :
+            if examen["PPM"] >= 86:
+                resultado_pulsaciones= "taquicardia"
+            elif examen["PPM"] <=84 and examen["PPM"]>=62:
+                resultado_pulsaciones= "normalidad"
+            elif examen["PPM"] <=60:
+                resultado_pulsaciones= "bradicardia"
+#30-39              
+        if examen["edad"] >= 30 and  examen["edad"] <= 39 :
+            if examen["PPM"] >= 86:
+                resultado_pulsaciones= "taquicardia"
+            elif examen["PPM"] <=84 and examen["PPM"]>=64:
+                resultado_pulsaciones= "normalidad"
+            elif examen["PPM"] <=62:
+                resultado_pulsaciones= "bradicardia" 
+#40-49
+        if examen["edad"] >= 40 and  examen["edad"] <= 49 :
+            if examen["PPM"] >= 90:
+                resultado_pulsaciones= "taquicardia"
+            elif examen["PPM"] <=88 and examen["PPM"]>=66:
+                resultado_pulsaciones= "normalidad"
+            elif examen["PPM"] <=64:
+                resultado_pulsaciones= "bradicardia" 
+#50 o más
+        if examen["edad"] >= 50:
+            if examen["PPM"] >= 90:
+                resultado_pulsaciones= "taquicardia"
+            elif examen["PPM"] <=88 and examen["PPM"]>=68:
+                resultado_pulsaciones= "normalidad"
+            elif examen["PPM"] <=66:
+                resultado_pulsaciones= "bradicardia" 
+#mujeres
+    if examen["genero"]== "F":               
+       
+        if examen["edad"] < 20:
+            resultado_pulsaciones= "normalidad"
+            
+        if examen["edad"] >= 20 and  examen["edad"] <= 29 :
+            if examen["PPM"] >= 96:
+                resultado_pulsaciones= "taquicardia"
+            elif examen["PPM"] <=94 and examen["PPM"]>=72:
+                resultado_pulsaciones= "normalidad"
+            elif examen["PPM"] <=70:
+                resultado_pulsaciones= "bradicardia" 
+        
+        if examen["edad"] >= 30 and  examen["edad"] <= 39 :
+            if examen["PPM"] >= 98:
+                resultado_pulsaciones= "taquicardia"
+            elif examen["PPM"] <=94 and examen["PPM"]>=72:
+                resultado_pulsaciones= "normalidad"
+            elif examen["PPM"] <=70:
+                resultado_pulsaciones= "bradicardia"
+        
+        if examen["edad"] >= 40 and  examen["edad"] <= 49 :
+            if examen["PPM"] >= 100:
+                resultado_pulsaciones= "taquicardia"
+            elif examen["PPM"] <=89 and examen["PPM"]>=74:
+                resultado_pulsaciones= "normalidad"
+            elif examen["PPM"] <=72:
+                resultado_pulsaciones= "bradicardia"
+        
+        if examen["edad"] >= 50:
+            if examen["PPM"] >= 104:
+                resultado_pulsaciones= "taquicardia"
+            elif examen["PPM"] <=102 and examen["PPM"]>=76:
+                resultado_pulsaciones= "normalidad"
+            elif examen["PPM"] <=74:
+                resultado_pulsaciones= "bradicardia" 
+    return resultado_pulsaciones
+
+
+
+def confirmar_anemia(examen:dict) -> bool:
+    """
+    Valida si el examen de sangre muestra anemia en la sangre dada la hemoglobina en sangre
+    :param examen: Diccionario con el examen de sangre al cual se le verificará anemia
+    :return:
+        bool: True si hay evidencia de anemia, False de lo contrario
+    """
+    porcentaje_hematrocito = (3.1*examen["Hb"])/100
+    anemia=False
+    if examen["edad"]<5:
+        if porcentaje_hematrocito<=33:
+            anemia=True
+    elif examen["edad"]>=5 and examen["edad"]<=11:
+        if porcentaje_hematrocito<=34:  
+            anemia = True  
+    elif examen["edad"]>12 and examen["edad"]<=14:
+        if porcentaje_hematrocito<=36:  
+            anemia = True
+    elif examen["genero"] == "F" and examen["edad"]>15:
+        if confirmar_embarazo(examen) == False:
+            if porcentaje_hematrocito<=36:
+               anemia = True
+    elif examen["genero"] == "F" and examen["edad"]>15:
+        if confirmar_embarazo(examen) == True:
+            if porcentaje_hematrocito<=33:
+               anemia = True
+    elif examen["genero"] == "M" and examen["edad"]>15:
+        if porcentaje_hematrocito<=39:
+           anemia = True
+           
+    return anemia
+
+def contar_hipoglicemicos(e1:dict,e2:dict, e3:dict, e4:dict)->int:
+    contador = 0
+    
+    if e1["glicemia"]<70:
+        contador = contador+1
+    if e2["glicemia"]<70:
+        contador = contador+2
+    if e3["glicemia"]<70:
+        contador = contador+3
+    if e4["glicemia"]<70:
+        contador = contador+4
+   
+    return contador
+
+def validar_infecciones(e1:dict,e2:dict, e3:dict, e4:dict)-> str:
+    """
+    Valida cuales exámenes de sangre presentan posibilidad de infecciones dependiendo del conteo de glóbulos
+    blancos (CGB)
+    :param e1: Diccionario con la información del examen de sangre 1
+    :param e2: Diccionario con la información del examen de sangre 2
+    :param e3: Diccionario con la información del examen de sangre 3
+    :param e4: Diccionario con la información del examende sangre 4
+    :return:
+        str: una cadena con todos los id's de los exámenes de sangre que presentan posibilidad de infección
+        separados por comas. Si no hay ninguno, retorna una cadena vacía.
+    """
+    ID_paciente = " "
+    
+    if e1["CBG"]>11:
+        ID_paciente = str(e1["id"])
+    if e2["CBG"]>11:
+        ID_paciente = str(e2["id"]) +"," + ID_paciente
+    if e3["CBG"]>11:
+        ID_paciente = str(e3["id"]) + "," + ID_paciente
+    if e4["CBG"]>11:
+        ID_paciente = str(e4["id"]) + "," + ID_paciente
+    
+
+    return (ID_paciente)
+ 
+def calcular_promedio(e1:dict,e2:dict, e3:dict, e4:dict)->float:
+    
+    tiempo = e1["tiempo"] + e2["tiempo"] + e3["tiempo"] + e4["tiempo"]
+    tiempo_promedio = tiempo/4
+    
+
+    
+    return round(tiempo_promedio,1)
+
+
+def actualizar_glicemia(tipo:int, objetivo:int, examen:dict)-> int:
+    
+    unidades_Suministradas = 0
+    if examen["glicemia"]>=250:
+        unidades_Suministradas = (examen["glicemia"]-objetivo)/tipo
+
+    return round(unidades_Suministradas,1)
+
+def validar_diabetes(examen:dict)->str:
+   
+    paciente_con= "diabetes"
+    
+    if examen["glicemia"]>=126:
+        paciente_con = "diabetes"
+    elif examen["glicemia"]>=100 and examen["glicemia"]<=125:
+        paciente_con = "prediabetes"
+    elif examen["glicemia"]<100:
+        paciente_con = "normalidad"
+    
+    return paciente_con
+
+def calcular_riesgo_cardiaco(examen:dict)->int:
+    """
+    Calular los puntos de riesgo cardíaco a partir del perfil lipídico
+    :param examen: Examen de sangre al cual se le calcularan los puntos de riesgo
+    :return:
+        int: puntos de riesgo cardiaco del examen dado por parámetro. Si hay dos o más pacientes con el mismo 
+        nivel de riesgo retorna el primero.
+    """
+    riesgo_cardiaco = 0
+    if examen["CT"]>239:
+       riesgo_cardiaco = riesgo_cardiaco+1
+    if validar_diabetes(examen) == "diabetes":
+       if examen["LDL"]<100:
+          riesgo_cardiaco = riesgo_cardiaco
+       elif examen["LDL"]>=100:
+          riesgo_cardiaco = riesgo_cardiaco+1
+    if validar_diabetes(examen) == "normalidad":
+       if examen["LDL"]<130:
+          riesgo_cardiaco = riesgo_cardiaco
+       elif examen["LDL"]>=130:
+        riesgo_cardiaco = riesgo_cardiaco+1
+    if examen["genero"] == "M":
+        if examen["HLD"]<40:
+            riesgo_cardiaco = riesgo_cardiaco+1
+    if examen["genero"] == "F":
+        if examen ["HLD"]<50:
+            riesgo_cardiaco = riesgo_cardiaco+1
+    if examen["trigliceridos"] >=150:
+        riesgo_cardiaco = riesgo_cardiaco+2
+
+#buscar prioridad
+    return riesgo_cardiaco
+
+def evaluar_prioridad(e1:dict,e2:dict, e3:dict, e4:dict)->dict:
+    
+    prioridad = e1
+    if calcular_riesgo_cardiaco(e1)<calcular_riesgo_cardiaco(e2):
+        prioridad = e2
+        if calcular_riesgo_cardiaco(e1)==calcular_riesgo_cardiaco(e2):
+            prioridad = e1
+    if calcular_riesgo_cardiaco(e2)< calcular_riesgo_cardiaco(e3): 
+       prioridad = e3
+       if calcular_riesgo_cardiaco(e2)== calcular_riesgo_cardiaco(e3): 
+          prioridad = e2
+    if calcular_riesgo_cardiaco(e3)< calcular_riesgo_cardiaco(e4): 
+       prioridad = e4
+       if calcular_riesgo_cardiaco(e3)== calcular_riesgo_cardiaco(e4): 
+          prioridad = e3
+    return prioridad
+
+def validar_CLL(examen:dict, frotis:bool) -> int:
+    
+    resultado_examen = 0
+    if examen["CL"]>=10:
+        resultado_examen = 1
+    elif examen["CL"]>=8 and examen["CL"]<=9.999:
+        if examen ["CP"]<145:
+            resultado_examen = 1
+    elif examen ["CL"]<8:
+         if frotis == "+":
+             resultado_examen = -1
+    
+    return resultado_examen
